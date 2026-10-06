@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Interactive Bangladesh Map - Explore all 8 divisions and 64 districts of Bangladesh."
+    >
+
+    <title>Interactive Bangladesh Map</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="site-header">
+
+        <div class="header-inner">
+
+            <div class="brand-area">
+
+                <div class="flag-logo" aria-hidden="true">
+                    <span></span>
+                </div>
+
+                <div>
+                    <p class="eyebrow">BANGLADESH GEOGRAPHY</p>
+
+                    <h1>
+                        Interactive Bangladesh Map
+                    </h1>
+
+                    <p class="header-subtitle">
+                        Explore all 8 Divisions and 64 Districts of Bangladesh
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="header-badge">
+                <span class="status-dot"></span>
+                Interactive Map
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================== -->
+
+    <main class="main-container">
+
+        <!-- =====================================
+             STATISTICS
+        ====================================== -->
+
+        <section
+            class="stats-grid"
+            aria-label="Bangladesh statistics"
+        >
+
+            <article class="stat-card">
+
+                <div class="stat-icon blue-icon">
+                    <span>8</span>
+                </div>
+
+                <div>
+                    <strong>8</strong>
+                    <span>Total Divisions</span>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon green-icon">
+                    <span>64</span>
+                </div>
+
+                <div>
+                    <strong>64</strong>
+                    <span>Total Districts</span>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <div class="stat-icon red-icon">
+                    <span>BD</span>
+                </div>
+
+                <div>
+                    <strong>Bangladesh</strong>
+                    <span>Country</span>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =====================================
+             SEARCH AREA
+        ====================================== -->
+
+        <section class="search-section">
+
+            <div class="search-wrapper">
+
+                <div class="search-icon" aria-hidden="true">
+                    🔎
+                </div>
+
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="Search division or district..."
+                    autocomplete="off"
+                    aria-label="Search division or district"
+                >
+
+                <button
+                    id="clearSearch"
+                    class="clear-search"
+                    type="button"
+                    aria-label="Clear search"
+                    title="Clear search"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div
+                id="searchResults"
+                class="search-results"
+                aria-live="polite"
+            ></div>
+
+        </section>
+
+
+        <!-- =====================================
+             DASHBOARD
+        ====================================== -->
+
+        <section class="dashboard-layout">
+
+            <!-- =================================
+                 LEFT SIDEBAR
+            ================================== -->
+
+            <aside class="panel sidebar-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="panel-kicker">
+                            BROWSE
+                        </span>
+
+                        <h2>
+                            Divisions &amp; Districts
+                        </h2>
+                    </div>
+
+                    <span
+                        id="districtCountBadge"
+                        class="count-badge"
+                    >
+                        64
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="divisionList"
+                    class="division-list"
+                ></div>
+
+
+                <button
+                    id="resetButton"
+                    class="reset-button"
+                    type="button"
+                    aria-label="Reset map"
+                >
+                    <span>↻</span>
+                    Reset Map
+                </button>
+
+            </aside>
+
+
+            <!-- =================================
+                 CENTER MAP
+            ================================== -->
+
+            <section class="panel map-panel">
+
+                <div class="map-header">
+
+                    <div>
+
+                        <span class="panel-kicker">
+                            GEOGRAPHIC VIEW
+                        </span>
+
+                        <h2>
+                            Bangladesh
+                        </h2>
+
+                    </div>
+
+                    <div
+                        id="mapStatus"
+                        class="map-status"
+                    >
+                        <span class="status-dot"></span>
+                        Ready
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="mapContainer"
+                    class="map-container"
+                >
+
+                    <div
+                        id="mapLoading"
+                        class="map-loading"
+                    >
+                        <div class="loading-spinner"></div>
+
+                        <strong>
+                            Loading Bangladesh map...
+                        </strong>
+
+                        <span>
+                            Please wait a moment
+                        </span>
+                    </div>
+
+
+                    <svg
+                        id="bangladeshMap"
+                        class="bangladesh-map"
+                        viewBox="0 0 760 820"
+                        role="img"
+                        aria-label="Interactive map of Bangladesh"
+                        preserveAspectRatio="xMidYMid meet"
+                    >
+                        <g id="mapBackground"></g>
+                        <g id="mapFeatures"></g>
+                        <g id="mapLabels"></g>
+                    </svg>
+
+
+                    <div
+                        id="mapTooltip"
+                        class="map-tooltip"
+                        role="tooltip"
+                    ></div>
+
+
+                    <div
+                        id="mapError"
+                        class="map-error hidden"
+                    >
+                        <div class="error-icon">!</div>
+
+                        <h3>
+                            Map could not be loaded
+                        </h3>
+
+                        <p>
+                            Please check your internet connection and reload the page.
+                        </p>
+
+                        <button
+                            id="retryMap"
+                            type="button"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="map-legend">
+
+                    <div class="legend-title">
+                        Divisions
+                    </div>
+
+                    <div id="legendItems"></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 RIGHT INFORMATION PANEL
+            ================================== -->
+
+            <aside class="panel info-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="panel-kicker">
+                            DETAILS
+                        </span>
+
+                        <h2>
+                            Information
+                        </h2>
+                    </div>
+
+                    <div
+                        id="selectionIndicator"
+                        class="selection-indicator"
+                    >
+                        <span></span>
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="infoContent"
+                    class="info-content"
+                >
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🗺️
+                        </div>
+
+                        <h3>
+                            Select a division or district
+                        </h3>
+
+                        <p>
+                            Click any division on the map or choose an item
+                            from the list to view information.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="site-footer">
+
+        <div class="footer-inner">
+
+            <div>
+                <strong>
+                    Interactive Bangladesh Map
+                </strong>
+
+                <span>
+                    Explore Bangladesh • 8 Divisions • 64 Districts
+                </span>
+            </div>
+
+            <div class="footer-right">
+                Built with HTML5 • CSS3 • Vanilla JavaScript
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
